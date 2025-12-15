@@ -72,6 +72,7 @@ export default function App() {
   const [homeScore, setHomeScore] = useState(0);
   const [awayScore, setAwayScore] = useState(0);
   const [servingTeam, setServingTeam] = useState("away");
+  const [lastScoringTeam, setLastScoringTeam] = useState(null);
 
   // Reset Away (Red) Team: Score 0, Roster 1-6
   const resetAway = () => {
@@ -178,7 +179,12 @@ export default function App() {
           <div
             onClick={() => {
               setAwayScore(s => s + 1);
+              // Only rotate if the other team (home) scored last
+              if (lastScoringTeam !== "away") {
+                setAwayPlayers(p => rotateClockwise(p));
+              }
               setServingTeam("away");
+              setLastScoringTeam("away");
             }}
             style={{
               flex: 1,
@@ -200,7 +206,12 @@ export default function App() {
           <div
             onClick={() => {
               setHomeScore(s => s + 1);
+              // Only rotate if the other team (away) scored last
+              if (lastScoringTeam !== "home") {
+                setHomePlayers(p => rotateClockwise(p));
+              }
               setServingTeam("home");
+              setLastScoringTeam("home");
             }}
             style={{
               flex: 1,
