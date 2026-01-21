@@ -76,15 +76,32 @@ export default function App() {
 
   // Reset Away (Red) Team: Score 0, Roster 1-6
   const resetAway = () => {
+    console.log('resetAway invoked');
     setAwayScore(0);
     setAwayPlayers(["1","2","3","4","5","6"]);
   };
 
   // Reset Home (Blue) Team: Score 0, Roster 1-6
   const resetHome = () => {
+    console.log('resetHome invoked');
     setHomeScore(0);
     setHomePlayers(["1","2","3","4","5","6"]);
   };
+
+  // Reset Both Teams: Scores 0, Rosters 1-6
+  const resetBoth = () => {
+    console.log('resetBoth invoked');
+    setHomeScore(0);
+    setAwayScore(0);
+    setHomePlayers(["1","2","3","4","5","6"]);
+    setAwayPlayers(["1","2","3","4","5","6"]);
+  };
+
+  // Individual score controls
+  const incAway = () => setAwayScore(s => s + 1);
+  const decAway = () => setAwayScore(s => Math.max(0, s - 1));
+  const incHome = () => setHomeScore(s => s + 1);
+  const decHome = () => setHomeScore(s => Math.max(0, s - 1));
 
   // Set server logic
   const setServer = (team, idx) => {
@@ -239,13 +256,15 @@ export default function App() {
           marginBottom: '20px',
           padding: '0 20px'
         }}>
-          <button style={{ padding: '12px 20px', borderRadius: '8px', border: 'none', background: '#333', color: '#fff', cursor: 'pointer', fontSize: '1.2rem' }}>+</button>
-          <button onClick={resetAway} style={{ padding: '12px 20px', borderRadius: '8px', border: 'none', background: '#333', color: '#fff', cursor: 'pointer', fontSize: '1.2rem' }}>↶</button>
-          <button style={{ padding: '12px 20px', borderRadius: '8px', border: 'none', background: '#333', color: '#fff', cursor: 'pointer', fontSize: '1.2rem' }}>↷</button>
-          <button style={{ padding: '12px 20px', borderRadius: '8px', border: 'none', background: '#333', color: '#fff', cursor: 'pointer', fontSize: '1.2rem' }}>⟳</button>
-          <button style={{ padding: '12px 20px', borderRadius: '8px', border: 'none', background: '#333', color: '#fff', cursor: 'pointer', fontSize: '1.2rem' }}>📊</button>
-          <button style={{ padding: '12px 20px', borderRadius: '8px', border: 'none', background: '#333', color: '#fff', cursor: 'pointer', fontSize: '1.2rem' }}>📤</button>
-          <button onClick={resetHome} style={{ padding: '12px 20px', borderRadius: '8px', border: 'none', background: '#333', color: '#fff', cursor: 'pointer', fontSize: '1.2rem' }}>⚙</button>
+          <button onClick={(e) => { e.stopPropagation(); incAway(); }} style={{ padding: '12px 16px', borderRadius: '8px', border: 'none', background: '#2e7d32', color: '#fff', cursor: 'pointer', fontSize: '1.2rem' }}>+</button>
+          <button onClick={(e) => { e.stopPropagation(); decAway(); }} style={{ padding: '12px 16px', borderRadius: '8px', border: 'none', background: '#b71c1c', color: '#fff', cursor: 'pointer', fontSize: '1.2rem' }}>-</button>
+          <button onClick={(e) => { e.stopPropagation(); resetAway(); }} style={{ padding: '12px 20px', borderRadius: '8px', border: 'none', background: '#333', color: '#fff', cursor: 'pointer', fontSize: '1.2rem' }}>↶</button>
+          <button onClick={(e) => { e.stopPropagation(); resetHome(); }} style={{ padding: '12px 20px', borderRadius: '8px', border: 'none', background: '#333', color: '#fff', cursor: 'pointer', fontSize: '1.2rem' }}>↷</button>
+          <button onClick={(e) => { e.stopPropagation(); resetBoth(); }} style={{ padding: '12px 20px', borderRadius: '8px', border: 'none', background: '#333', color: '#fff', cursor: 'pointer', fontSize: '1.2rem' }}>⟳</button>
+          <button onClick={(e) => { e.stopPropagation(); decHome(); }} style={{ padding: '12px 16px', borderRadius: '8px', border: 'none', background: '#b71c1c', color: '#fff', cursor: 'pointer', fontSize: '1.2rem' }}>-</button>
+          <button onClick={(e) => { e.stopPropagation(); incHome(); }} style={{ padding: '12px 16px', borderRadius: '8px', border: 'none', background: '#2e7d32', color: '#fff', cursor: 'pointer', fontSize: '1.2rem' }}>+</button>
+          
+          
         </div>
             
         {/* Rotation Controls */}
